@@ -16,6 +16,7 @@ const Button = ({
   ...props 
 }: ButtonProps) => {
   const [ripples, setRipples] = useState<Array<{ id: number; left: number; top: number }>>([]);
+  const [isHovered, setIsHovered] = useState(false);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     // Create ripple
@@ -37,16 +38,27 @@ const Button = ({
     if (onClick) onClick(e);
   };
 
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+  };
+
   const variantClass = `calc-button-${variant}`;
   const wideClass = wide ? 'calc-button-wide' : '';
+  const hoverClass = isHovered ? 'button-3d pulse' : '';
 
   return (
     <button
-      className={`calc-button ${variantClass} ${wideClass} ${className}`}
+      className={`calc-button ${variantClass} ${wideClass} ${hoverClass} ${className}`}
       onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       {...props}
     >
-      {children}
+      <span className="relative z-10">{children}</span>
       
       {ripples.map((ripple) => (
         <span
@@ -58,6 +70,11 @@ const Button = ({
           }}
         />
       ))}
+      
+      {/* Glow effect on hover */}
+      {isHovered && variant === 'primary' && (
+        <span className="absolute inset-0 w-full h-full bg-kreya-blue/20 blur-md rounded-xl" />
+      )}
     </button>
   );
 };

@@ -77,6 +77,15 @@
     font-feature-settings: "ss01", "ss02", "cv01", "cv02";
     overscroll-behavior: none;
     touch-action: manipulation;
+    background-image: 
+      radial-gradient(circle at 25% 10%, rgba(255, 255, 255, 0.1) 0%, transparent 20%),
+      radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.05) 0%, transparent 25%);
+  }
+  
+  .dark body {
+    background-image: 
+      radial-gradient(circle at 25% 10%, rgba(100, 100, 255, 0.1) 0%, transparent 20%),
+      radial-gradient(circle at 75% 75%, rgba(100, 100, 255, 0.05) 0%, transparent 25%);
   }
   
   input::-webkit-outer-spin-button,
@@ -93,30 +102,50 @@
 @layer components {
   .calc-container {
     @apply max-w-md mx-auto w-full h-full flex flex-col;
+    perspective: 1000px;
   }
   
   .calc-display {
-    @apply w-full rounded-t-lg bg-card p-4 text-right font-mono overflow-x-auto;
+    @apply w-full rounded-t-lg bg-card p-6 text-right font-mono overflow-x-auto shadow-inner;
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0) 100%);
+    backdrop-filter: blur(8px);
+    transform-style: preserve-3d;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark .calc-display {
+    background: linear-gradient(180deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0) 100%);
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
   }
   
   .calc-buttons {
-    @apply grid grid-cols-4 gap-2 bg-card rounded-b-lg p-4;
+    @apply grid grid-cols-4 gap-3 bg-card rounded-b-lg p-6;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
   }
   
   .calc-button {
-    @apply text-lg h-16 rounded-lg flex items-center justify-center transition-all duration-100 active:scale-95 select-none relative overflow-hidden;
+    @apply text-lg h-16 rounded-xl flex items-center justify-center transition-all duration-100 active:scale-95 select-none relative overflow-hidden;
+    backdrop-filter: blur(4px);
   }
   
   .calc-button-primary {
-    @apply bg-kreya-blue text-white hover:bg-kreya-darkBlue;
+    @apply bg-gradient-to-br from-kreya-blue to-kreya-darkBlue text-white hover:shadow-lg hover:shadow-kreya-blue/40;
   }
   
   .calc-button-secondary {
-    @apply bg-secondary text-foreground hover:bg-secondary/80;
+    @apply bg-gradient-to-br from-secondary to-secondary/80 text-foreground hover:shadow-md hover:shadow-black/5;
+  }
+  
+  .dark .calc-button-secondary {
+    @apply hover:shadow-white/5;
   }
   
   .calc-button-accent {
-    @apply bg-accent text-accent-foreground hover:bg-accent/80;
+    @apply bg-gradient-to-br from-accent to-accent/80 text-accent-foreground hover:shadow-md hover:shadow-black/5;
+  }
+  
+  .dark .calc-button-accent {
+    @apply hover:shadow-white/5;
   }
   
   .calc-button-wide {
@@ -125,6 +154,7 @@
 
   .ripple {
     @apply absolute block bg-white rounded-full opacity-30 scale-0 animate-ripple;
+    transform-origin: center;
   }
   
   .fraction {
@@ -140,7 +170,9 @@
   }
   
   .spinner {
-    @apply w-12 h-12 border-4 border-transparent border-t-primary border-l-primary rounded-full animate-spin;
+    @apply w-12 h-12 rounded-full animate-spin;
+    background: conic-gradient(transparent, hsl(var(--primary)));
+    mask: radial-gradient(farthest-side, transparent 55%, white 60%);
   }
   
   .nav-link {
@@ -148,11 +180,51 @@
   }
   
   .nav-link.active {
-    @apply text-kreya-blue bg-secondary;
+    @apply text-white bg-gradient-to-r from-kreya-blue to-kreya-lightBlue shadow-lg shadow-kreya-blue/20;
   }
   
   .input-container {
-    @apply bg-card rounded-lg p-4 flex flex-col gap-4;
+    @apply bg-card rounded-lg p-4 flex flex-col gap-4 shadow-lg;
+  }
+}
+
+/* Glass morphism effect */
+.glass {
+  @apply bg-opacity-30 backdrop-blur-lg border border-white/10;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+}
+
+.dark .glass {
+  @apply bg-opacity-10 border-white/5;
+}
+
+/* 3D button effect */
+.button-3d {
+  transform: translateY(0);
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+}
+
+.button-3d:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+}
+
+/* Animated background gradient */
+.animated-bg {
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
@@ -163,4 +235,37 @@
 
 .mobile-only {
   @apply block sm:hidden;
+}
+
+/* Enhanced animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 102, 255, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 102, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 102, 255, 0);
+  }
+}
+
+.pulse {
+  animation: pulse 2s infinite;
 }

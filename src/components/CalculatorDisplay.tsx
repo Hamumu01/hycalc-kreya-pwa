@@ -55,13 +55,19 @@ const CalculatorDisplay: React.FC<CalculatorDisplayProps> = ({
   };
 
   return (
-    <div className="calc-display flex flex-col items-end">
-      <div className={`text-muted-foreground text-lg ${isMobile ? 'text-xl' : 'text-2xl'} overflow-x-auto whitespace-nowrap`}>
+    <div className="calc-display flex flex-col items-end glass relative">
+      <div className="absolute top-2 left-3 flex space-x-1">
+        <span className="w-2 h-2 rounded-full bg-destructive/60"></span>
+        <span className="w-2 h-2 rounded-full bg-yellow-400/60"></span>
+        <span className="w-2 h-2 rounded-full bg-green-400/60"></span>
+      </div>
+      
+      <div className={`text-muted-foreground ${isMobile ? 'text-xl' : 'text-2xl'} overflow-x-auto whitespace-nowrap transition-all duration-300`}>
         {renderExpression(expression)}
       </div>
       
       {showResult && (
-        <div className={`${isMobile ? 'text-3xl' : 'text-4xl'} font-bold overflow-x-auto whitespace-nowrap`}>
+        <div className={`${isMobile ? 'text-3xl' : 'text-4xl'} font-bold overflow-x-auto whitespace-nowrap transition-all duration-300 float`}>
           {renderExpression(result)}
         </div>
       )}

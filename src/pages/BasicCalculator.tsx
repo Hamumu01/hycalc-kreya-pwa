@@ -11,6 +11,7 @@ import {
 } from '../utils/calculatorUtils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from "@/components/ui/use-toast";
+import { Calculator as CalculatorIcon } from 'lucide-react';
 
 const BasicCalculator = () => {
   const [input, setInput] = useState('');
@@ -20,6 +21,7 @@ const BasicCalculator = () => {
   const [overwrite, setOverwrite] = useState(false);
   const [showResult, setShowResult] = useState(false);
   const [error, setError] = useState('');
+  const [animateResult, setAnimateResult] = useState(false);
   const isMobile = useIsMobile();
   const { toast } = useToast();
 
@@ -114,6 +116,10 @@ const BasicCalculator = () => {
       setOperation('');
       setOverwrite(true);
       setShowResult(true);
+      
+      // Add animation to highlight result
+      setAnimateResult(true);
+      setTimeout(() => setAnimateResult(false), 800);
     } catch (err) {
       setError((err as Error).message);
       handleClear();
@@ -149,13 +155,19 @@ const BasicCalculator = () => {
 
   return (
     <div className="calc-container">
+      <div className="mb-2 text-center">
+        <div className="inline-flex items-center gap-2 bg-secondary/40 px-3 py-1 rounded-full text-sm text-muted-foreground glass">
+          <CalculatorIcon size={14} /> Basic Calculator
+        </div>
+      </div>
+      
       <CalculatorDisplay 
         expression={buildExpression()}
         result={result}
         showResult={showResult}
       />
       
-      <div className="calc-buttons">
+      <div className={`calc-buttons ${animateResult ? 'pulse' : ''}`}>
         <Button onClick={handleClear}>C</Button>
         <Button onClick={handleDelete}>⌫</Button>
         <Button onClick={() => handleFraction()}>a/b</Button>
