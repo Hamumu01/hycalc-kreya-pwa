@@ -80,7 +80,7 @@ const Button = ({
         wideClass, 
         hoverClass, 
         pressedClass,
-        gradientClass, // Apply gradient class
+        gradientClass,
         'transform transition-all duration-150 backdrop-blur-sm overflow-hidden',
         'relative z-0 font-medium',
         variant === 'primary' || variant === 'accent' ? 'text-white' : '',
@@ -117,19 +117,19 @@ const Button = ({
         isHovered ? 'opacity-100' : ''
       )} />
       
-      {/* Border glow effect on hover */}
+      {/* Border glow effect on hover - removing border effect */}
       {isHovered && (variant === 'primary' || variant === 'accent') && (
         <span className={cn(
-          "absolute inset-0 w-full h-full blur-md rounded-xl",
-          variant === 'primary' ? 'bg-kreya-blue/30' : 'bg-purple-500/30'
+          "absolute inset-0 w-full h-full blur-md rounded-xl opacity-40",
+          variant === 'primary' ? 'bg-kreya-blue/20' : 'bg-purple-500/20'
         )} />
       )}
       
-      {/* Shine line effect */}
+      {/* Shine effect instead of border */}
       <span className={cn(
-        'absolute inset-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/60 to-transparent',
+        'absolute inset-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent',
         'opacity-0 top-[10%] transition-opacity duration-300',
-        isHovered ? 'opacity-100' : ''
+        isHovered ? 'opacity-70' : ''
       )} />
     </button>
   );
