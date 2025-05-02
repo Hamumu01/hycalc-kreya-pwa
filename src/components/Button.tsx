@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'accent';
@@ -17,6 +18,7 @@ const Button = ({
 }: ButtonProps) => {
   const [ripples, setRipples] = useState<Array<{ id: number; left: number; top: number }>>([]);
   const [isHovered, setIsHovered] = useState(false);
+  const [isPressed, setIsPressed] = useState(false);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     // Create ripple
@@ -34,6 +36,10 @@ const Button = ({
       setRipples((prev) => prev.filter((ripple) => ripple.id !== id));
     }, 600);
     
+    // Add pressed state briefly
+    setIsPressed(true);
+    setTimeout(() => setIsPressed(false), 150);
+    
     // Call original onClick handler if provided
     if (onClick) onClick(e);
   };
@@ -49,21 +55,37 @@ const Button = ({
   const variantClass = `calc-button-${variant}`;
   const wideClass = wide ? 'calc-button-wide' : '';
   const hoverClass = isHovered ? 'button-3d pulse' : '';
+  const pressedClass = isPressed ? 'scale-95' : '';
 
   return (
     <button
-      className={`calc-button ${variantClass} ${wideClass} ${hoverClass} ${className}`}
+      className={cn(
+        'calc-button',
+        variantClass, 
+        wideClass, 
+        hoverClass, 
+        pressedClass,
+        'transform transition-all duration-150 backdrop-blur-sm overflow-hidden',
+        'relative z-0 font-medium',
+        variant === 'primary' ? 'text-white' : '',
+        className
+      )}
       onClick={handleClick}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onMouseDown={() => setIsPressed(true)}
+      onMouseUp={() => setIsPressed(false)}
+      onTouchStart={() => setIsPressed(true)}
+      onTouchEnd={() => setIsPressed(false)}
       {...props}
     >
       <span className="relative z-10">{children}</span>
       
+      {/* Ripple effect */}
       {ripples.map((ripple) => (
         <span
           key={ripple.id}
-          className="ripple"
+          className="ripple absolute block bg-white/30 rounded-full scale-0 animate-ripple"
           style={{
             left: ripple.left,
             top: ripple.top,
@@ -71,10 +93,25 @@ const Button = ({
         />
       ))}
       
-      {/* Glow effect on hover */}
+      {/* Inner shadow effect */}
+      <span className={cn(
+        'absolute inset-0 w-full h-full rounded-xl transition-opacity duration-200',
+        'bg-gradient-to-b from-white/10 via-transparent to-black/5',
+        'opacity-0',
+        isHovered ? 'opacity-100' : ''
+      )} />
+      
+      {/* Border glow effect on hover for primary buttons */}
       {isHovered && variant === 'primary' && (
         <span className="absolute inset-0 w-full h-full bg-kreya-blue/20 blur-md rounded-xl" />
       )}
+      
+      {/* Shine line effect */}
+      <span className={cn(
+        'absolute inset-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent',
+        'opacity-0 top-[10%] transition-opacity duration-300',
+        isHovered ? 'opacity-100' : ''
+      )} />
     </button>
   );
 };
