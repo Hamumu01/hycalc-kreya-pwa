@@ -52,10 +52,25 @@ const Button = ({
     setIsHovered(false);
   };
 
+  // Get gradient classes based on variant
+  const getGradientClass = () => {
+    switch (variant) {
+      case 'primary':
+        return 'bg-gradient-to-br from-kreya-blue via-blue-500 to-kreya-darkBlue';
+      case 'secondary':
+        return 'bg-gradient-to-br from-gray-200 via-gray-100 to-gray-300 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900';
+      case 'accent':
+        return 'bg-gradient-to-br from-purple-500 via-purple-400 to-pink-500';
+      default:
+        return 'bg-gradient-to-br from-kreya-blue via-blue-500 to-kreya-darkBlue';
+    }
+  };
+
   const variantClass = `calc-button-${variant}`;
   const wideClass = wide ? 'calc-button-wide' : '';
   const hoverClass = isHovered ? 'button-3d pulse' : '';
   const pressedClass = isPressed ? 'scale-95' : '';
+  const gradientClass = getGradientClass();
 
   return (
     <button
@@ -65,9 +80,10 @@ const Button = ({
         wideClass, 
         hoverClass, 
         pressedClass,
+        gradientClass, // Apply gradient class
         'transform transition-all duration-150 backdrop-blur-sm overflow-hidden',
         'relative z-0 font-medium',
-        variant === 'primary' ? 'text-white' : '',
+        variant === 'primary' || variant === 'accent' ? 'text-white' : '',
         className
       )}
       onClick={handleClick}
@@ -96,19 +112,22 @@ const Button = ({
       {/* Inner shadow effect */}
       <span className={cn(
         'absolute inset-0 w-full h-full rounded-xl transition-opacity duration-200',
-        'bg-gradient-to-b from-white/10 via-transparent to-black/5',
+        'bg-gradient-to-b from-white/20 via-transparent to-black/10',
         'opacity-0',
         isHovered ? 'opacity-100' : ''
       )} />
       
-      {/* Border glow effect on hover for primary buttons */}
-      {isHovered && variant === 'primary' && (
-        <span className="absolute inset-0 w-full h-full bg-kreya-blue/20 blur-md rounded-xl" />
+      {/* Border glow effect on hover */}
+      {isHovered && (variant === 'primary' || variant === 'accent') && (
+        <span className={cn(
+          "absolute inset-0 w-full h-full blur-md rounded-xl",
+          variant === 'primary' ? 'bg-kreya-blue/30' : 'bg-purple-500/30'
+        )} />
       )}
       
       {/* Shine line effect */}
       <span className={cn(
-        'absolute inset-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/40 to-transparent',
+        'absolute inset-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/60 to-transparent',
         'opacity-0 top-[10%] transition-opacity duration-300',
         isHovered ? 'opacity-100' : ''
       )} />
