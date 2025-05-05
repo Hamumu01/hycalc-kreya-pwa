@@ -1,21 +1,16 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calculator, AtomIcon, ArrowRightLeft, Info } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
 const Main = () => {
-  return (
-    <div className="calc-container pb-16">
+  return <div className="calc-container pb-16">
       {/* Hero Section */}
       <div className="bg-card rounded-lg p-6 mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-kreya-blue via-kreya-lightBlue to-kreya-blue mb-4">
           hycalculator
         </h1>
-        <p className="text-center text-muted-foreground max-w-md mx-auto">
-          Kalkulator modern dengan berbagai fitur untuk kebutuhan perhitungan sehari-hari
-        </p>
+        <p className="text-center text-muted-foreground max-w-md mx-auto"></p>
       </div>
 
       {/* Features Section */}
@@ -165,8 +160,6 @@ const Main = () => {
           Dilarang menyalin atau menggunakan tanpa izin resmi.
         </p>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Main;
