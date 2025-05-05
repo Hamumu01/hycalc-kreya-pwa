@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 
@@ -126,11 +125,6 @@ const Button = ({
       )}
       
       {/* Shine line effect */}
-      <span className={cn(
-        'absolute inset-0 w-full h-[1px] bg-gradient-to-r from-transparent via-white/60 to-transparent',
-        'opacity-0 top-[10%] transition-opacity duration-300',
-        isHovered ? 'opacity-100' : ''
-      )} />
     </button>
   );
 };
