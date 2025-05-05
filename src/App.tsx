@@ -12,6 +12,7 @@ import ScientificCalculator from "./pages/ScientificCalculator";
 import Converter from "./pages/Converter";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import Main from "./pages/Main";
 import { register } from "./serviceWorkerRegistration";
 import { showInstallPrompt } from "./serviceWorkerUtils";
 
@@ -55,7 +56,7 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
-              <Route index element={<Navigate to="/calculator" replace />} />
+              <Route index element={<Main />} />
               <Route path="calculator" element={<BasicCalculator />} />
               <Route path="scientific" element={<ScientificCalculator />} />
               <Route path="converter" element={<Converter />} />

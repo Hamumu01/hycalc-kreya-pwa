@@ -80,7 +80,10 @@ const Settings = () => {
             hycalculator v1.0.0
           </p>
           <p className="text-xs text-muted-foreground text-center mt-1">
-            © KREYA
+            © 2025 KREYA. Hak Cipta Dilindungi.
+          </p>
+          <p className="text-xs text-muted-foreground text-center mt-1">
+            Dilarang menyalin atau menggunakan tanpa izin resmi.
           </p>
         </div>
       </div>

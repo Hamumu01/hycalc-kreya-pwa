@@ -4,7 +4,8 @@ import {
   Calculator, 
   AtomIcon, 
   ArrowRightLeft, 
-  Settings as SettingsIcon 
+  Settings as SettingsIcon,
+  Home
 } from "lucide-react";
 
 const Navigation = () => {
@@ -12,12 +13,22 @@ const Navigation = () => {
   const path = location.pathname;
   
   const getActiveClass = (route: string) => {
-    return path.includes(route) ? "active" : "";
+    if (route === '/' && path === '/') return 'active';
+    return path.includes(route) && route !== '/' ? "active" : "";
   };
   
   return (
     <nav className="mt-4 bg-card rounded-lg shadow-sm">
       <div className="flex items-center justify-around">
+        <Link 
+          to="/" 
+          className={`nav-link ${getActiveClass("/")}`}
+          aria-label="Home"
+        >
+          <Home size={24} />
+          <span className="text-xs mt-1">Home</span>
+        </Link>
+        
         <Link 
           to="/calculator" 
           className={`nav-link ${getActiveClass("calculator")}`}
