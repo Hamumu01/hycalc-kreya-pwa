@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calculator, AtomIcon, ArrowRightLeft, Info, Download } from "lucide-react";
+import { Calculator, ArrowRightLeft, Info, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Main = () => {
@@ -23,37 +23,20 @@ const Main = () => {
 
       {/* Features Section */}
       <h2 className="text-2xl font-bold mb-4">Fitur Aplikasi</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
         <Card>
           <CardHeader className="pb-3">
             <div className="w-12 h-12 rounded-full bg-kreya-blue/10 flex items-center justify-center mb-2">
               <Calculator className="text-kreya-blue" />
             </div>
-            <CardTitle>Kalkulator Dasar</CardTitle>
+            <CardTitle>Kalkulator Multi-Mode</CardTitle>
           </CardHeader>
           <CardContent>
             <CardDescription>
-              Lakukan perhitungan dasar dengan mudah. Tambah, kurang, kali, dan bagi dengan antarmuka yang intuitif.
+              Satu kalkulator dengan dua mode: Dasar dan Ilmiah. Hitung dengan mudah dari operasi sederhana hingga fungsi trigonometri kompleks.
             </CardDescription>
             <Link to="/calculator">
               <Button variant="outline" className="w-full mt-4">Buka Kalkulator</Button>
-            </Link>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="pb-3">
-            <div className="w-12 h-12 rounded-full bg-kreya-blue/10 flex items-center justify-center mb-2">
-              <AtomIcon className="text-kreya-blue" />
-            </div>
-            <CardTitle>Kalkulator Ilmiah</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <CardDescription>
-              Fungsi lanjutan untuk perhitungan kompleks. Sin, cos, tan, logaritma, dan masih banyak lagi.
-            </CardDescription>
-            <Link to="/scientific">
-              <Button variant="outline" className="w-full mt-4">Buka Scientific</Button>
             </Link>
           </CardContent>
         </Card>
@@ -100,7 +83,7 @@ const Main = () => {
                   <div>
                     <h3 className="font-semibold mb-1">Pilih Mode Kalkulator</h3>
                     <p className="text-muted-foreground text-sm">
-                      Pilih mode kalkulator yang sesuai dengan kebutuhan Anda: Dasar, Ilmiah, atau Konverter.
+                      Beralih antara mode Dasar dan Ilmiah dengan tombol toggle di bagian atas kalkulator.
                     </p>
                   </div>
                 </div>
@@ -173,8 +156,6 @@ const Main = () => {
           </div>
         </CardContent>
       </Card>
-
-      {/* Copyright - Removed */}
     </div>;
 };
 export default Main;

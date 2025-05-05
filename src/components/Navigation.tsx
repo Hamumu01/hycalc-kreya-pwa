@@ -2,7 +2,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { 
   Calculator, 
-  AtomIcon, 
   ArrowRightLeft, 
   Settings as SettingsIcon,
   Home
@@ -36,15 +35,6 @@ const Navigation = () => {
         >
           <Calculator size={24} />
           <span className="text-xs mt-1">Calculator</span>
-        </Link>
-        
-        <Link 
-          to="/scientific" 
-          className={`nav-link ${getActiveClass("scientific")}`}
-          aria-label="Scientific Calculator"
-        >
-          <AtomIcon size={24} />
-          <span className="text-xs mt-1">Scientific</span>
         </Link>
         
         <Link 

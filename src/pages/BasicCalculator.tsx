@@ -7,11 +7,13 @@ import {
   fractionToDecimal, 
   decimalToFraction, 
   calculateResult, 
+  calculateScientific,
   formatNumber 
 } from '../utils/calculatorUtils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useToast } from "@/components/ui/use-toast";
-import { Calculator as CalculatorIcon } from 'lucide-react';
+import { Calculator as CalculatorIcon, AtomIcon } from 'lucide-react';
+import { Toggle } from "@/components/ui/toggle";
 
 const BasicCalculator = () => {
   const [input, setInput] = useState('');
@@ -22,6 +24,7 @@ const BasicCalculator = () => {
   const [showResult, setShowResult] = useState(false);
   const [error, setError] = useState('');
   const [animateResult, setAnimateResult] = useState(false);
+  const [scientificMode, setScientificMode] = useState(false);
   const isMobile = useIsMobile();
   const { toast } = useToast();
 
@@ -45,6 +48,10 @@ const BasicCalculator = () => {
           handleDelete();
         } else if (e.key === 'Escape' || e.key === 'c' || e.key === 'C') {
           handleClear();
+        } else if (e.key === '^') {
+          handleOperation('^');
+        } else if (e.key === '%') {
+          handlePercent();
         }
       };
 
@@ -102,6 +109,23 @@ const BasicCalculator = () => {
     }
   };
 
+  const handleScientificOperation = (op: string) => {
+    try {
+      if (input === '') return;
+      
+      const value = fractionToDecimal(input);
+      const calculatedResult = calculateScientific(value, op);
+      
+      setResult(formatNumber(calculatedResult));
+      setInput(formatNumber(calculatedResult));
+      setOverwrite(true);
+      setShowResult(true);
+    } catch (err) {
+      setError((err as Error).message);
+      handleClear();
+    }
+  };
+
   const handleEquals = () => {
     try {
       if (firstOperand === null || operation === '' || input === '') return;
@@ -131,6 +155,22 @@ const BasicCalculator = () => {
     setInput(input + '/');
   };
 
+  const handlePercent = () => {
+    try {
+      if (input === '') return;
+      
+      const value = fractionToDecimal(input);
+      const calculatedResult = value / 100;
+      
+      setResult(formatNumber(calculatedResult));
+      setInput(formatNumber(calculatedResult));
+      setOverwrite(true);
+      setShowResult(true);
+    } catch (err) {
+      setError((err as Error).message);
+    }
+  };
+
   const handleDelete = () => {
     if (overwrite || input === '') return;
     setInput(input.slice(0, -1));
@@ -145,6 +185,12 @@ const BasicCalculator = () => {
     setShowResult(false);
   };
 
+  // Toggle between basic and scientific mode
+  const toggleCalculatorMode = () => {
+    setScientificMode(!scientificMode);
+    handleClear(); // Clear the calculator on mode switch
+  };
+
   // Build the expression to display
   const buildExpression = () => {
     if (operation && firstOperand !== null) {
@@ -155,10 +201,21 @@ const BasicCalculator = () => {
 
   return (
     <div className="calc-container">
-      <div className="mb-2 text-center">
+      <div className="mb-2 text-center flex justify-between items-center">
         <div className="inline-flex items-center gap-2 bg-secondary/40 px-3 py-1 rounded-full text-sm text-muted-foreground glass">
-          <CalculatorIcon size={14} /> Basic Calculator
+          {scientificMode ? <AtomIcon size={14} /> : <CalculatorIcon size={14} />}
+          {scientificMode ? 'Scientific Calculator' : 'Basic Calculator'}
         </div>
+        
+        <Toggle 
+          pressed={scientificMode} 
+          onPressedChange={toggleCalculatorMode}
+          aria-label="Toggle scientific mode"
+          className="bg-secondary/40 hover:bg-secondary/60"
+        >
+          {scientificMode ? <CalculatorIcon size={14} className="mr-1" /> : <AtomIcon size={14} className="mr-1" />}
+          {scientificMode ? 'Basic' : 'Scientific'}
+        </Toggle>
       </div>
       
       <CalculatorDisplay 
@@ -167,31 +224,72 @@ const BasicCalculator = () => {
         showResult={showResult}
       />
       
-      <div className={`calc-buttons ${animateResult ? 'pulse' : ''}`}>
-        <Button onClick={handleClear}>C</Button>
-        <Button onClick={handleDelete}>⌫</Button>
-        <Button onClick={() => handleFraction()}>a/b</Button>
-        <Button variant="primary" onClick={() => handleOperation('÷')}>÷</Button>
-        
-        <Button onClick={() => handleNumber('7')}>7</Button>
-        <Button onClick={() => handleNumber('8')}>8</Button>
-        <Button onClick={() => handleNumber('9')}>9</Button>
-        <Button variant="primary" onClick={() => handleOperation('×')}>×</Button>
-        
-        <Button onClick={() => handleNumber('4')}>4</Button>
-        <Button onClick={() => handleNumber('5')}>5</Button>
-        <Button onClick={() => handleNumber('6')}>6</Button>
-        <Button variant="primary" onClick={() => handleOperation('-')}>-</Button>
-        
-        <Button onClick={() => handleNumber('1')}>1</Button>
-        <Button onClick={() => handleNumber('2')}>2</Button>
-        <Button onClick={() => handleNumber('3')}>3</Button>
-        <Button variant="primary" onClick={() => handleOperation('+')}>+</Button>
-        
-        <Button onClick={() => handleNumber('0')}>0</Button>
-        <Button onClick={() => handleNumber('.')}>.</Button>
-        <Button variant="primary" wide onClick={handleEquals}>=</Button>
-      </div>
+      {!scientificMode ? (
+        // Basic Calculator Buttons
+        <div className={`calc-buttons ${animateResult ? 'pulse' : ''}`}>
+          <Button onClick={handleClear}>C</Button>
+          <Button onClick={handleDelete}>⌫</Button>
+          <Button onClick={() => handleFraction()}>a/b</Button>
+          <Button variant="primary" onClick={() => handleOperation('÷')}>÷</Button>
+          
+          <Button onClick={() => handleNumber('7')}>7</Button>
+          <Button onClick={() => handleNumber('8')}>8</Button>
+          <Button onClick={() => handleNumber('9')}>9</Button>
+          <Button variant="primary" onClick={() => handleOperation('×')}>×</Button>
+          
+          <Button onClick={() => handleNumber('4')}>4</Button>
+          <Button onClick={() => handleNumber('5')}>5</Button>
+          <Button onClick={() => handleNumber('6')}>6</Button>
+          <Button variant="primary" onClick={() => handleOperation('-')}>-</Button>
+          
+          <Button onClick={() => handleNumber('1')}>1</Button>
+          <Button onClick={() => handleNumber('2')}>2</Button>
+          <Button onClick={() => handleNumber('3')}>3</Button>
+          <Button variant="primary" onClick={() => handleOperation('+')}>+</Button>
+          
+          <Button onClick={() => handleNumber('0')}>0</Button>
+          <Button onClick={() => handleNumber('.')}>.</Button>
+          <Button variant="primary" wide onClick={handleEquals}>=</Button>
+        </div>
+      ) : (
+        // Scientific Calculator Buttons
+        <div className="calc-buttons grid grid-cols-5 gap-2">
+          <Button onClick={() => handleScientificOperation('sin')}>sin</Button>
+          <Button onClick={() => handleScientificOperation('cos')}>cos</Button>
+          <Button onClick={() => handleScientificOperation('tan')}>tan</Button>
+          <Button onClick={handleClear}>C</Button>
+          <Button onClick={handleDelete}>⌫</Button>
+          
+          <Button onClick={() => handleScientificOperation('ln')}>ln</Button>
+          <Button onClick={() => handleScientificOperation('log')}>log</Button>
+          <Button onClick={() => handleScientificOperation('!')}>x!</Button>
+          <Button onClick={handlePercent}>%</Button>
+          <Button variant="primary" onClick={() => handleOperation('÷')}>÷</Button>
+          
+          <Button onClick={() => handleOperation('^')}>x^y</Button>
+          <Button onClick={() => handleScientificOperation('sqrt')}>√</Button>
+          <Button onClick={() => handleNumber('7')}>7</Button>
+          <Button onClick={() => handleNumber('8')}>8</Button>
+          <Button onClick={() => handleNumber('9')}>9</Button>
+          
+          <Button onClick={() => handleScientificOperation('exp')}>e^x</Button>
+          <Button onClick={() => handleFraction()}>a/b</Button>
+          <Button onClick={() => handleNumber('4')}>4</Button>
+          <Button onClick={() => handleNumber('5')}>5</Button>
+          <Button onClick={() => handleNumber('6')}>6</Button>
+          
+          <Button onClick={() => handleNumber('(')}>(</Button>
+          <Button onClick={() => handleNumber(')')}>)</Button>
+          <Button onClick={() => handleNumber('1')}>1</Button>
+          <Button onClick={() => handleNumber('2')}>2</Button>
+          <Button onClick={() => handleNumber('3')}>3</Button>
+          
+          <Button onClick={() => handleOperation('mod')}>mod</Button>
+          <Button onClick={() => handleNumber('0')}>0</Button>
+          <Button onClick={() => handleNumber('.')}>.</Button>
+          <Button variant="primary" onClick={handleEquals} wide>=</Button>
+        </div>
+      )}
     </div>
   );
 };

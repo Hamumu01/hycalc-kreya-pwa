@@ -8,7 +8,6 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Loading from "./components/Loading";
 import Layout from "./components/Layout";
 import BasicCalculator from "./pages/BasicCalculator";
-import ScientificCalculator from "./pages/ScientificCalculator";
 import Converter from "./pages/Converter";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
@@ -58,7 +57,6 @@ const App = () => {
             <Route path="/" element={<Layout />}>
               <Route index element={<Main />} />
               <Route path="calculator" element={<BasicCalculator />} />
-              <Route path="scientific" element={<ScientificCalculator />} />
               <Route path="converter" element={<Converter />} />
               <Route path="settings" element={<Settings />} />
             </Route>
