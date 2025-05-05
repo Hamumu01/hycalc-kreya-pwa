@@ -1,9 +1,17 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Calculator, AtomIcon, ArrowRightLeft, Info } from "lucide-react";
+import { Calculator, AtomIcon, ArrowRightLeft, Info, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
 const Main = () => {
+  const [showGuide, setShowGuide] = useState(false);
+
+  const toggleGuide = () => {
+    setShowGuide(!showGuide);
+  };
+
   return <div className="calc-container pb-16">
       {/* Hero Section */}
       <div className="bg-card rounded-lg p-6 mb-8">
@@ -68,98 +76,105 @@ const Main = () => {
         </Card>
       </div>
 
-      {/* Usage Guide Section */}
-      <h2 className="text-2xl font-bold mb-4">Panduan Penggunaan</h2>
-      <Card className="mb-8">
-        <CardContent className="pt-6">
-          <div className="space-y-6">
-            <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-kreya-blue/10 flex items-center justify-center flex-shrink-0">
-                <span className="font-semibold text-kreya-blue">1</span>
-              </div>
-              <div>
-                <h3 className="font-semibold mb-1">Pilih Mode Kalkulator</h3>
-                <p className="text-muted-foreground text-sm">
-                  Pilih mode kalkulator yang sesuai dengan kebutuhan Anda: Dasar, Ilmiah, atau Konverter.
-                </p>
-              </div>
-            </div>
+      {/* Usage Guide Section - Now hidden by default */}
+      <div className="mb-8">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-bold">Panduan Penggunaan</h2>
+          <Button 
+            variant="outline" 
+            onClick={toggleGuide}
+            className="text-kreya-blue font-medium"
+          >
+            {showGuide ? "TUTUP" : "SELENGKAPNYA"}
+          </Button>
+        </div>
+        
+        {showGuide && (
+          <Card className="mb-8 animate-fade-in">
+            <CardContent className="pt-6">
+              <div className="space-y-6">
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-kreya-blue/10 flex items-center justify-center flex-shrink-0">
+                    <span className="font-semibold text-kreya-blue">1</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">Pilih Mode Kalkulator</h3>
+                    <p className="text-muted-foreground text-sm">
+                      Pilih mode kalkulator yang sesuai dengan kebutuhan Anda: Dasar, Ilmiah, atau Konverter.
+                    </p>
+                  </div>
+                </div>
 
-            <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-kreya-blue/10 flex items-center justify-center flex-shrink-0">
-                <span className="font-semibold text-kreya-blue">2</span>
-              </div>
-              <div>
-                <h3 className="font-semibold mb-1">Masukkan Angka dan Operasi</h3>
-                <p className="text-muted-foreground text-sm">
-                  Ketuk tombol untuk memasukkan angka dan operasi yang diinginkan. Hasil akan ditampilkan secara otomatis.
-                </p>
-              </div>
-            </div>
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-kreya-blue/10 flex items-center justify-center flex-shrink-0">
+                    <span className="font-semibold text-kreya-blue">2</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">Masukkan Angka dan Operasi</h3>
+                    <p className="text-muted-foreground text-sm">
+                      Ketuk tombol untuk memasukkan angka dan operasi yang diinginkan. Hasil akan ditampilkan secara otomatis.
+                    </p>
+                  </div>
+                </div>
 
-            <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-kreya-blue/10 flex items-center justify-center flex-shrink-0">
-                <span className="font-semibold text-kreya-blue">3</span>
-              </div>
-              <div>
-                <h3 className="font-semibold mb-1">Simpan Hasil</h3>
-                <p className="text-muted-foreground text-sm">
-                  Salin hasil atau gunakan dalam perhitungan selanjutnya dengan tombol yang tersedia.
-                </p>
-              </div>
-            </div>
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-kreya-blue/10 flex items-center justify-center flex-shrink-0">
+                    <span className="font-semibold text-kreya-blue">3</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">Simpan Hasil</h3>
+                    <p className="text-muted-foreground text-sm">
+                      Salin hasil atau gunakan dalam perhitungan selanjutnya dengan tombol yang tersedia.
+                    </p>
+                  </div>
+                </div>
 
-            <div className="flex gap-4">
-              <div className="w-8 h-8 rounded-full bg-kreya-blue/10 flex items-center justify-center flex-shrink-0">
-                <span className="font-semibold text-kreya-blue">4</span>
+                <div className="flex gap-4">
+                  <div className="w-8 h-8 rounded-full bg-kreya-blue/10 flex items-center justify-center flex-shrink-0">
+                    <span className="font-semibold text-kreya-blue">4</span>
+                  </div>
+                  <div>
+                    <h3 className="font-semibold mb-1">Ubah Tema</h3>
+                    <p className="text-muted-foreground text-sm">
+                      Kustomisasi tampilan aplikasi dengan mengubah tema melalui menu Settings.
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div>
-                <h3 className="font-semibold mb-1">Ubah Tema</h3>
-                <p className="text-muted-foreground text-sm">
-                  Kustomisasi tampilan aplikasi dengan mengubah tema melalui menu Settings.
-                </p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        )}
+      </div>
 
-      {/* Additional Tips */}
-      <h2 className="text-2xl font-bold mb-4">Tips Penggunaan</h2>
-      <Card>
+      {/* Install App Card - Replaced Tips Penggunaan */}
+      <h2 className="text-2xl font-bold mb-4">Install Aplikasi</h2>
+      <Card className="mb-8 bg-gradient-to-r from-kreya-blue/10 to-kreya-lightBlue/5">
         <CardHeader className="pb-3">
           <div className="flex items-center gap-2 mb-2">
-            <Info className="text-kreya-blue" />
-            <CardTitle className="text-lg">Tips dan Trik</CardTitle>
+            <Download className="text-kreya-blue" />
+            <CardTitle className="text-lg">Download Aplikasi</CardTitle>
           </div>
         </CardHeader>
         <CardContent>
-          <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5">
-            <li>Ketuk ganda tombol AC untuk mereset semua riwayat perhitungan.</li>
-            <li>Gunakan tombol switch untuk beralih antar mode tampilan pada kalkulator ilmiah.</li>
-            <li>Untuk hasil yang lebih akurat pada konversi, gunakan format angka yang sesuai.</li>
-            <li>Instalasi aplikasi di perangkat Anda untuk akses offline.</li>
+          <p className="text-sm text-muted-foreground mb-4">
+            Install hycalculator di perangkat Anda untuk akses lebih cepat dan penggunaan offline. Nikmati pengalaman terbaik dengan instalasi aplikasi.
+          </p>
+          <ul className="space-y-2 text-sm text-muted-foreground list-disc pl-5 mb-4">
+            <li>Akses kalkulator tanpa koneksi internet</li>
+            <li>Tampilan layar penuh seperti aplikasi native</li>
+            <li>Performa lebih cepat dan responsif</li>
+            <li>Hemat data dan waktu loading</li>
           </ul>
-          <div className="mt-6 text-center">
-            <Link to="/settings">
-              <Button variant="outline">Pengaturan Lanjutan</Button>
-            </Link>
+          <div className="text-center">
+            <Button variant="default" id="install-button" className="bg-kreya-blue hover:bg-kreya-darkBlue">
+              <Download size={18} />
+              Install Aplikasi
+            </Button>
           </div>
         </CardContent>
       </Card>
 
-      {/* Copyright */}
-      <div className="border-t pt-4 mt-8">
-        <p className="text-sm text-muted-foreground text-center">
-          hycalculator v1.0.0
-        </p>
-        <p className="text-xs text-muted-foreground text-center mt-1">
-          © 2025 KREYA. Hak Cipta Dilindungi.
-        </p>
-        <p className="text-xs text-muted-foreground text-center mt-1">
-          Dilarang menyalin atau menggunakan tanpa izin resmi.
-        </p>
-      </div>
+      {/* Copyright - Removed */}
     </div>;
 };
 export default Main;
