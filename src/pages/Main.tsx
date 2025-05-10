@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { usePWAInstallPrompt } from '@/hooks/use-pwa-install';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calculator, ArrowRightLeft, Info, Download } from "lucide-react";
@@ -7,6 +8,7 @@ import { Button } from "@/components/ui/button";
 
 const Main = () => {
   const [showGuide, setShowGuide] = useState(false);
+  const { isInstallable, promptInstall } = usePWAInstallPrompt();
 
   const toggleGuide = () => {
     setShowGuide(!showGuide);
@@ -149,10 +151,26 @@ const Main = () => {
             <li>Hemat data dan waktu loading</li>
           </ul>
           <div className="text-center">
-            <Button variant="default" id="install-button" className="bg-kreya-blue hover:bg-kreya-darkBlue">
-              <Download size={18} />
-              Install Aplikasi
-            </Button>
+            {isInstallable && (
+              <Button
+                variant="default"
+                className="bg-kreya-blue hover:bg-kreya-darkBlue"
+                onClick={promptInstall}
+              >
+                <Download size={18} />
+                Install Aplikasi
+              </Button>
+            )}
+            {!isInstallable && (
+              <Button
+                variant="default"
+                className="bg-gray-300 text-gray-500 cursor-not-allowed"
+                disabled
+              >
+                <Download size={18} />
+                Install Aplikasi
+              </Button>
+            )}
           </div>
         </CardContent>
       </Card>
