@@ -253,38 +253,51 @@ const BasicCalculator = () => {
         </div>
       ) : (
         // Scientific Calculator Buttons
-        <div className="calc-buttons grid grid-cols-5 gap-2">
+        <div className="calc-buttons grid grid-cols-6 gap-2">
           <Button onClick={() => handleScientificOperation('sin')}>sin</Button>
           <Button onClick={() => handleScientificOperation('cos')}>cos</Button>
           <Button onClick={() => handleScientificOperation('tan')}>tan</Button>
+          <Button onClick={() => handleScientificOperation('asin')}>asin</Button>
           <Button onClick={handleClear}>C</Button>
           <Button onClick={handleDelete}>⌫</Button>
           
-          <Button onClick={() => handleScientificOperation('ln')}>ln</Button>
-          <Button onClick={() => handleScientificOperation('log')}>log</Button>
-          <Button onClick={() => handleScientificOperation('!')}>x!</Button>
+          <Button onClick={() => handleScientificOperation('acos')}>acos</Button>
+          <Button onClick={() => handleScientificOperation('atan')}>atan</Button>
+          <Button onClick={() => handleScientificOperation('sinh')}>sinh</Button>
+          <Button onClick={() => handleScientificOperation('cosh')}>cosh</Button>
           <Button onClick={handlePercent}>%</Button>
           <Button variant="primary" onClick={() => handleOperation('÷')}>÷</Button>
           
+          <Button onClick={() => handleScientificOperation('tanh')}>tanh</Button>
+          <Button onClick={() => handleScientificOperation('ln')}>ln</Button>
+          <Button onClick={() => handleScientificOperation('log')}>log</Button>
+          <Button onClick={() => handleScientificOperation('!')}>x!</Button>
           <Button onClick={() => handleOperation('^')}>x^y</Button>
+          <Button variant="primary" onClick={() => handleOperation('×')}>×</Button>
+          
           <Button onClick={() => handleScientificOperation('sqrt')}>√</Button>
+          <Button onClick={() => handleScientificOperation('cbrt')}>∛</Button>
           <Button onClick={() => handleNumber('7')}>7</Button>
           <Button onClick={() => handleNumber('8')}>8</Button>
           <Button onClick={() => handleNumber('9')}>9</Button>
+          <Button variant="primary" onClick={() => handleOperation('-')}>-</Button>
           
-          <Button onClick={() => handleScientificOperation('exp')}>e^x</Button>
-          <Button onClick={() => handleFraction()}>a/b</Button>
+          <Button onClick={() => handleScientificOperation('abs')}>|x|</Button>
+          <Button onClick={() => handleScientificOperation('inv')}>1/x</Button>
           <Button onClick={() => handleNumber('4')}>4</Button>
           <Button onClick={() => handleNumber('5')}>5</Button>
           <Button onClick={() => handleNumber('6')}>6</Button>
+          <Button variant="primary" onClick={() => handleOperation('+')}>+</Button>
           
-          <Button onClick={() => handleNumber('(')}>(</Button>
-          <Button onClick={() => handleNumber(')')}>)</Button>
+          <Button onClick={() => handleScientificOperation('exp')}>e^x</Button>
+          <Button onClick={() => handleOperation('mod')}>mod</Button>
           <Button onClick={() => handleNumber('1')}>1</Button>
           <Button onClick={() => handleNumber('2')}>2</Button>
           <Button onClick={() => handleNumber('3')}>3</Button>
+          <Button onClick={() => handleFraction()}>a/b</Button>
           
-          <Button onClick={() => handleOperation('mod')}>mod</Button>
+          <Button onClick={() => handleNumber('(')}>(</Button>
+          <Button onClick={() => handleNumber(')')}>)</Button>
           <Button onClick={() => handleNumber('0')}>0</Button>
           <Button onClick={() => handleNumber('.')}>.</Button>
           <Button variant="primary" onClick={handleEquals} wide>=</Button>

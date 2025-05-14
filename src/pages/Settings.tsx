@@ -4,9 +4,12 @@ import { useTheme } from "@/hooks/use-theme";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import { useState } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Settings = () => {
   const { theme, toggleTheme } = useTheme();
+  const { language, setLanguage, t } = useLanguage();
   const [hasCheckedForUpdates, setHasCheckedForUpdates] = useState(false);
 
   const handleCheckForUpdates = () => {
@@ -21,24 +24,42 @@ const Settings = () => {
   return (
     <div className="calc-container">
       <div className="bg-card rounded-lg p-6 space-y-8">
-        <h2 className="text-2xl font-bold text-left">Settings</h2>
+        <h2 className="text-2xl font-bold text-left">{t('settings')}</h2>
         
         <div className="space-y-6">
           <div className="flex justify-between items-center">
             <div>
-              <h3 className="font-medium">Theme</h3>
+              <h3 className="font-medium">{t('language')}</h3>
               <p className="text-sm text-muted-foreground">
-                Switch between dark and light mode
+                {t('selectLanguage')}
+              </p>
+            </div>
+            <Select value={language} onValueChange={(value) => setLanguage(value as 'en' | 'id')}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={t('selectLanguage')} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="en">{t('english')}</SelectItem>
+                <SelectItem value="id">{t('indonesian')}</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          <div className="flex justify-between items-center">
+            <div>
+              <h3 className="font-medium">{t('theme')}</h3>
+              <p className="text-sm text-muted-foreground">
+                {t('chooseTheme')}
               </p>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-sm">Light</span>
+              <span className="text-sm">{t('light')}</span>
               <Switch 
                 checked={theme === "dark"} 
                 onCheckedChange={toggleTheme}
                 aria-label="Toggle theme"
               />
-              <span className="text-sm">Dark</span>
+              <span className="text-sm">{t('dark')}</span>
             </div>
           </div>
           

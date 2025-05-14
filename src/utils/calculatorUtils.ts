@@ -123,6 +123,20 @@ export const calculateScientific = (num: number, operation: string): number => {
       return Math.cos(num);
     case "tan":
       return Math.tan(num);
+    case "asin":
+      if (num < -1 || num > 1) throw new Error("Invalid input for arcsin");
+      return Math.asin(num);
+    case "acos":
+      if (num < -1 || num > 1) throw new Error("Invalid input for arccos");
+      return Math.acos(num);
+    case "atan":
+      return Math.atan(num);
+    case "sinh":
+      return Math.sinh(num);
+    case "cosh":
+      return Math.cosh(num);
+    case "tanh":
+      return Math.tanh(num);
     case "log":
       if (num <= 0) throw new Error("Invalid input for logarithm");
       return Math.log10(num);
@@ -132,8 +146,15 @@ export const calculateScientific = (num: number, operation: string): number => {
     case "sqrt":
       if (num < 0) throw new Error("Cannot compute square root of negative number");
       return Math.sqrt(num);
+    case "cbrt":
+      return Math.cbrt(num);
+    case "abs":
+      return Math.abs(num);
     case "exp":
       return Math.exp(num);
+    case "inv":
+      if (num === 0) throw new Error("Cannot divide by zero");
+      return 1 / num;
     case "!":
       return factorial(num);
     default:

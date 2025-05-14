@@ -100,7 +100,8 @@
 
 @layer components {
   .calc-container {
-    @apply max-w-md mx-auto w-full h-full flex flex-col;
+    @apply w-full h-full flex flex-col;
+    @apply max-w-full sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto;
     perspective: 1000px;
   }
   
@@ -194,6 +195,24 @@
   
   .nav-link.active {
     @apply text-white bg-gradient-to-r from-kreya-blue to-kreya-lightBlue shadow-lg shadow-kreya-blue/20;
+  }
+  
+  /* Dropdown menu styles */
+  .nav-dropdown-item {
+    @apply flex items-center p-3 hover:bg-secondary/50 transition-colors;
+  }
+  
+  .nav-dropdown-item.active {
+    @apply text-white bg-gradient-to-r from-kreya-blue to-kreya-lightBlue shadow-md shadow-kreya-blue/20;
+  }
+  
+  /* Navigation positioning */
+  .top-navigation {
+    @apply mb-4 mt-0;
+  }
+  
+  .bottom-navigation {
+    @apply mt-4 mb-0;
   }
   
   .input-container {
@@ -294,6 +313,23 @@
 
 .mobile-only {
   @apply block sm:hidden;
+}
+
+/* Responsive card grid layouts */
+.card-grid {
+  @apply grid gap-4;
+  @apply grid-cols-1 sm:grid-cols-2 lg:grid-cols-3;
+}
+
+.card-grid-compact {
+  @apply grid gap-3;
+  @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
+}
+
+/* Responsive card sizing */
+.card-responsive {
+  @apply transition-all duration-200;
+  @apply p-3 sm:p-4 md:p-6;
 }
 
 /* Enhanced animations */
